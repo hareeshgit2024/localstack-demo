@@ -97,6 +97,13 @@ To set up and run LocalStack on your development machine, you have several optio
   
 - **AWS CLI and SDKs:** Once LocalStack is running, you can interact with it using the AWS CLI or AWS SDKs by configuring them to point to the LocalStack endpoints instead of the real AWS endpoints.
   When using the AWS CLI with LocalStack, you can use the same commands as you would with the real AWS cloud. However, you need to configure the AWS CLI to point to your LocalStack instance.
+
+  You can install the `AWS CLI` using the Homebrew package manager with the following command:
+
+  ```
+  brew install awscli
+  ```
+
   Below is a sample command used with AWS CLI commands that can be utilized with LocalStack,
 
   Create a bucket in S3
