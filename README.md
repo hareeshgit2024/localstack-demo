@@ -112,3 +112,55 @@ To set up and run LocalStack on your development machine, you have several optio
   aws s3api create-bucket --bucket my-bucket --endpoint-url=http://localhost:4566
   ```
 
+## Scenario based development ##
+
+**Scenario**: Automated Employee Data Processing
+
+**Background**:
+
+The HR department at Company-X is responsible for maintaining an up-to-date record of all employees. They periodically receive updates to employee information in the form of JSON files. These files include new hires, updates to existing employee details, and information on employees who have left the company. To streamline the process of updating the employee database, Company-X has implemented an automated data processing pipeline using Localstack to simulate AWS services.
+
+**Flow**:
+
+- Data Upload:
+
+A member of the HR team uploads a JSON file named ` employee_updates.json ` to the designated S3 bucket. This file contains the latest employee data changes, including new hires and updates to existing records.
+
+- Event Notification:
+
+The upload triggers an ` S3 event notification `, which sends a message to an ` SNS topic `. This message contains metadata about the uploaded file, such as its location in the S3 bucket.
+
+- Message Distribution:
+
+The SNS topic immediately publishes the message to an ` SQS queue `. The queue acts as a buffer, ensuring that messages are processed sequentially and reliably.
+
+- Data Processing:
+
+A ` Lambda function ` is set up to trigger when a new message arrives in the SQS queue. The function retrieves the message and reads the employee_updates.json file from the S3 bucket.
+The Lambda function parses the JSON data and prepares it for CRUD operations. It identifies new employee records, updates to existing employees, and any deletions that need to be made.
+
+- Database Update:
+
+The Lambda function communicates with the Spring Boot application, which serves as the interface for handling CRUD operations on the DynamoDB database.
+The Spring Boot application processes the data, performing the necessary create, update, or delete operations on the employee records stored in DynamoDB.
+
+- Monitoring and Logging:
+
+Throughout the process, ` CloudWatch ` collects logs and metrics from each component. It tracks the number of files processed, the status of Lambda executions, and the health of the DynamoDB updates.
+CloudWatch is configured to send alerts to the IT team if any anomalies or errors occur, ensuring that issues are addressed promptly.
+
+**Outcome:**
+
+By the end of this automated process, the employee records in DynamoDB are updated to reflect the latest changes from the HR department. This efficient pipeline reduces manual effort, minimizes errors, and ensures that employee data is always current.
+
+## Solution ##
+
+**Component Diagram**
+
+![Component_Diagram](https://github.com/user-attachments/assets/243560ef-8b0e-4e80-b13b-475a905e6435)
+
+**Sequence Diagram**
+
+![SequenceDiagram](https://github.com/user-attachments/assets/48d99298-b56c-48c6-bb54-efd6e6c1b357)
+
+
