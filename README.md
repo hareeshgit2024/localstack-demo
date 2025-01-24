@@ -211,6 +211,11 @@ These differences highlight the distinct purposes and capabilities of AWS and Lo
 
 ## Localstack Commands ##
 
+Before getting into the Service details, let us see the health of service in Localstack.
+
+http://localhost:4566/_localstack/health
+
+
 ### Simple Storage Service - S3 ###
 
 | Operation                     |	Command                                 |
@@ -226,6 +231,34 @@ These differences highlight the distinct purposes and capabilities of AWS and Lo
 | Delete Object                 |	aws s3api delete-object --bucket trainingbucket --key <object-key> --endpoint-url=http://localhost:4566      |
 |                               | aws s3api delete-object --bucket trainingbucket --key testfile.txt --endpoint-url=http://localhost:4566 |
 | Delete Bucket                 |	aws s3api delete-bucket --bucket trainingbucket --endpoint-url=http://localhost:4566      |
+
+
+### Simple Queue Service - SQS ###
+
+| Operation                     |	Command                                 |
+|-------------------------------| ------------------------------------    |
+| Create Queue                  |	aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name trainingqueue     |
+| List Queues                   |	aws sqs list-queues --endpoint-url=http://localhost:4566   |
+| Send Message to Queue         |	aws sqs send-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/trainingqueue --message-body "Welcome to LocalStack today" --endpoint-url=http://localhost:4566     |
+| View message from a Queue     |	aws sqs receive-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/trainingqueue --max-number-of-messages 5 --wait-time-seconds 5 --endpoint-url=http://localhost:4566     |
+| Delete Queue                  | aws --endpoint-url=http://localhost:4566 sqs delete-queue --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/trainingqueue |
+
+
+### Simple Notification Service - SNS ###
+
+| Operation                     |	Command                                 |
+|-------------------------------| ------------------------------------    |
+| Create Topic                  |	aws sns create-topic --name << topic-name >> --endpoint-url=http://localhost:4566      |
+|                               | aws --endpoint-url=http://localhost:4566 sns create-topic --name trainingtopic |
+| List Topics                   |	aws --endpoint-url=http://localhost:4566 sns list-topics      |
+| Subscribe                     |	aws --endpoint-url=http://localhost:4566 sns subscribe --topic-arn <topic-arn> --protocol <protocol> --notification-endpoint <endpoint> |
+|                               | aws --endpoint-url=http://localhost:4566 sns subscribe --topic-arn arn:aws:sns:eu-central-1:000000000000:trainingtopic --protocol sqs --notification-endpoint arn:aws:sqs:us-east-1:000000000000:trainingqueue      |
+| List Subscriptions            |	aws --endpoint-url=http://localhost:4566 sns list-subscriptions     |
+| List Subscriptions by Topic   | ## aws sns list-subscriptions-by-topic --topic-arn <topic-arn> --endpoint-url=http://localhost:4566 |
+| Unsubscribe                   | ## aws sns unsubscribe --subscription-arn <subscription-arn> --endpoint-url=http://localhost:4566 |
+| Publish message               | ## aws sns publish --topic-arn <topic-arn> --message "<message>" --endpoint-url=http://localhost:4566 |
+| Delete Topic                  |	aws --endpoint-url=http://localhost:4566 sns delete-topic --topic-arn <topic-arn>       |
+
 
 
 ## Scenario based development ##
