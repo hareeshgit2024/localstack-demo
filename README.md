@@ -1,4 +1,4 @@
-# Local Stack #
+![image](https://github.com/user-attachments/assets/a15cd9af-6e85-4c0e-9af0-a84040d00b99)# Local Stack #
 
 ## Overview - AWS ##
 
@@ -208,6 +208,24 @@ Purpose: AWS is designed for production environments, offering scalability, secu
 
 
 These differences highlight the distinct purposes and capabilities of AWS and LocalStack, with AWS focusing on production-grade services and LocalStack providing a convenient local testing environment.
+
+## Localstack Commands ##
+
+### Simple Storage Service - S3 ###
+
+| Operation                     |	Command                                 |
+|-------------------------------| ------------------------------------    |
+| Create Bucket                 |	aws s3api create-bucket --bucket trainingbucket --endpoint-url=http://localhost:4566      |
+| List Buckets                  |	aws s3api list-buckets --endpoint-url=http://localhost:4566                              |
+| Get Bucket Information        |	aws s3api get-bucket-location --bucket trainingbucket --endpoint-url=http://localhost:4566|
+| List Objects                  |	aws s3api list-objects --bucket trainingbucket --endpoint-url=http://localhost:4566       |
+| Upload File                   |	aws s3 cp <file-path> s3://trainingbucket/ --endpoint-url=http://localhost:4566           |
+| Download File                 |	aws s3 cp s3://trainingbucket/<object-key> <local-path> --endpoint-url=http://localhost:4566      |
+| Delete Object                 |	aws s3api delete-object --bucket trainingbucket --key <object-key> --endpoint-url=http://localhost:4566      |
+| Delete Bucket                 |	aws s3api delete-bucket --bucket trainingbucket --endpoint-url=http://localhost:4566      |
+
+
+
 
 
 ## Scenario based development ##
