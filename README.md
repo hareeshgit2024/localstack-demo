@@ -50,6 +50,9 @@ To set up and run LocalStack on your development machine, you have several optio
   # Pull the LocalStack Docker Image
   docker pull localstack/localstack
 
+  #Pull the LocalStack Pro Docker Image
+  docker run --rm -it -e LOCALSTACK_AUTH_TOKEN=<<token>> -p 4566:4566 -p 4510-4559:4510-4559 localstack/localstack-pro:latest
+
   # Run the LocalStack Container  
   docker run -d --name localstack_main -p 4566:4566 -p 4571:4571 localstack/localstack
   
