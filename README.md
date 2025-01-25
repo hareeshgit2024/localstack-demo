@@ -142,6 +142,22 @@ To set up and run LocalStack on your development machine, you have several optio
   aws s3api create-bucket --bucket my-bucket --endpoint-url=http://localhost:4566
   ```
 
+```
+To convert the LocalStack command for listing S3 buckets into a command that works with AWS Cloud,
+you simply need to remove the **--endpoint-url** parameter, as it is specific to LocalStack.
+
+Here’s the equivalent command for AWS Cloud:
+
+    aws s3api list-buckets
+
+--endpoint-url: This is used to point the AWS CLI to a custom endpoint, such as LocalStack, for testing purposes.
+
+Removing it defaults the CLI to connect to the actual AWS Cloud.
+
+Make sure your AWS CLI is configured with valid AWS credentials and the correct region to run this command successfully
+
+```
+
 `When you create an S3 bucket, SQS queue, or SNS topic in AWS versus LocalStack, the underlying mechanisms and storage processes differ significantly due to the nature of their environments. Here’s a breakdown of how each service operates in both AWS and LocalStack:`
 
 ## Amazon Web Services (AWS) ##
