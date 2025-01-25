@@ -143,6 +143,8 @@ To set up and run LocalStack on your development machine, you have several optio
   ```
 
 ```
+LocalStack : aws --endpoint-url=http://localhost:4566 s3api list-buckets
+
 To convert the LocalStack command for listing S3 buckets into a command that works with AWS Cloud,
 you simply need to remove the **--endpoint-url** parameter, as it is specific to LocalStack.
 
