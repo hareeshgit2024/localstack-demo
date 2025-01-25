@@ -154,6 +154,8 @@ Data Storage: Data stored in S3 is replicated across multiple data centers withi
 
 Access: AWS uses IAM policies, bucket policies, and ACLs to manage access control.
 
+NB : When we say AWS backend, it will be dealt by AWS Config and AWS Control Plane.
+
 **SQS Queue:**
 
 Creation: Creating an SQS queue involves configuring attributes such as visibility timeout and message retention. AWS backend services handle the setup and management of these configurations.
