@@ -88,6 +88,16 @@ To set up and run LocalStack on your development machine, you have several optio
         - "./localstack:/tmp/localstack_volume" # Persist data on the host
 
   ```
+In the given docker-compose.yml file, the ports section under the localstack service defines port mappings between the Docker container and the host machine. Here's a breakdown of the ports and their relevance:
+
+  Format: "host_port:container_port"
+
+  host_port: The port on the host machine that is accessible outside the container.
+  container_port: The port inside the Docker container where the service is running.
+
+  1. 4566:4566 - It's the LocalStack Gateway port, which provides a unified endpoint for all AWS service APIs. This port is used as the main entry point for accessing LocalStack services (e.g., S3, SNS, SQS, Lambda, etc.). When interacting with AWS services via the LocalStack container, you send requests to http://localhost:4566 on the host.
+
+  2. 4571:4571 - This port is used internally by LocalStack for communication between its components and managing services. This port supports LocalStack's internal services, such as inter-process communication within the container.
 
 - **LocalStack CLI:** You can use the LocalStack Command Line Interface (CLI) to manage and run LocalStack. This can be installed via Python's package manager, pip, and provides commands to start and stop LocalStack easily.
   
@@ -128,7 +138,7 @@ To set up and run LocalStack on your development machine, you have several optio
 - **AWS CLI and SDKs:** Once LocalStack is running, you can interact with it using the AWS CLI or AWS SDKs by configuring them to point to the LocalStack endpoints instead of the real AWS endpoints.
   When using the AWS CLI with LocalStack, you can use the same commands as you would with the real AWS cloud. However, you need to configure the AWS CLI to point to your LocalStack instance.
 
-  You can install the `AWS CLI` using the Homebrew package manager with the following command:
+  You can install the `AWS CLI` using the Homebrew (Mac) / Chocolate (Windows) package manager with the following command:
 
   ```
   brew install awscli
@@ -282,6 +292,34 @@ http://localhost:4566/_localstack/health
 
 
 ## Scenario based development ##
+
+**Scenario - 1** : Java Notification app using AWS Java SDK, Simple Email Service (SES), and CloudFormation
+
+- **AWS SNS** (Simple Notification Service) is a fully managed messaging service provided by Amazon Web Services that enables the decoupling of microservices and facilitates the delivery of notifications to subscribers using a publish-subscribe model. It is commonly used to send messages (notifications) to multiple subscribers or endpoints, such as email addresses, phone numbers (SMS), HTTP endpoints, and AWS services like Lambda or SQS queues.
+
+**How AWS SNS Works**
+  - Create a Topic: A topic is the communication channel.
+  - Add Subscriptions: Define who or what should receive the messages (e.g., email, HTTP endpoint, Lambda).
+  - Publish Messages: Messages are published to the topic by a publisher, and all subscribers receive the message.
+
+- **AWS SQS** (Simple Queue Service) is a fully managed message queuing service designed for decoupling and scaling microservices, distributed systems, and serverless applications. It enables you to send, store, and retrieve messages between software components without requiring them to be available or online at the same time.
+
+**How AWS SQS Works**
+  - Create a Queue: A queue acts as a temporary storage for messages until they are retrieved by consumers.
+    Examples: order-processing-queue, notification-queue.
+  - Send Messages to the Queue: Producers (applications or services) send messages to the queue using the SendMessage API.
+  - Queue Stores Messages: Messages are stored securely in the queue until they are processed or expire. The default retention period is 4 days, but it can be extended up to 14 days.
+  - Receive Messages from the Queue: Consumers (applications or services) retrieve messages from the queue using the ReceiveMessage API. Once retrieved, the message remains hidden (invisibility timeout) for a configurable period to avoid duplicate processing.
+  - Delete Messages: After processing, consumers delete the message from the queue using the DeleteMessage API.
+
+- **AWS Subscription** To send messages from an SNS topic to an SQS queue, you can use an AWS subscription to link the SNS topic to the SQS queue. This allows messages published to the SNS topic to be automatically delivered to the SQS queue.
+  
+Steps Involved :
+  - Ensure SNS topic is created.
+  - Ensure SQS queue is created.
+  - Create a subscription that links the SNS topic to the SQS queue.
+
+---------------------------
 
 **Scenario**: Automated Employee Data Processing
 
