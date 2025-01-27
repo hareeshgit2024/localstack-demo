@@ -295,14 +295,16 @@ http://localhost:4566/_localstack/health
 
 **Scenario - 1** : Java Notification app using AWS Java SDK, Simple Email Service (SES), and CloudFormation
 
-- **AWS SNS** (Simple Notification Service) is a fully managed messaging service provided by Amazon Web Services that enables the decoupling of microservices and facilitates the delivery of notifications to subscribers using a publish-subscribe model. It is commonly used to send messages (notifications) to multiple subscribers or endpoints, such as email addresses, phone numbers (SMS), HTTP endpoints, and AWS services like Lambda or SQS queues.
+### AWS SNS (Simple Notification Service) ###
+is a fully managed messaging service provided by Amazon Web Services that enables the decoupling of microservices and facilitates the delivery of notifications to subscribers using a publish-subscribe model. It is commonly used to send messages (notifications) to multiple subscribers or endpoints, such as email addresses, phone numbers (SMS), HTTP endpoints, and AWS services like Lambda or SQS queues.
 
 **How AWS SNS Works**
   - Create a Topic: A topic is the communication channel.
   - Add Subscriptions: Define who or what should receive the messages (e.g., email, HTTP endpoint, Lambda).
   - Publish Messages: Messages are published to the topic by a publisher, and all subscribers receive the message.
 
-- **AWS SQS** (Simple Queue Service) is a fully managed message queuing service designed for decoupling and scaling microservices, distributed systems, and serverless applications. It enables you to send, store, and retrieve messages between software components without requiring them to be available or online at the same time.
+### AWS SQS (Simple Queue Service) ### 
+is a fully managed message queuing service designed for decoupling and scaling microservices, distributed systems, and serverless applications. It enables you to send, store, and retrieve messages between software components without requiring them to be available or online at the same time.
 
 **How AWS SQS Works**
   - Create a Queue: A queue acts as a temporary storage for messages until they are retrieved by consumers.
@@ -312,12 +314,17 @@ http://localhost:4566/_localstack/health
   - Receive Messages from the Queue: Consumers (applications or services) retrieve messages from the queue using the ReceiveMessage API. Once retrieved, the message remains hidden (invisibility timeout) for a configurable period to avoid duplicate processing.
   - Delete Messages: After processing, consumers delete the message from the queue using the DeleteMessage API.
 
-- **AWS Subscription** To send messages from an SNS topic to an SQS queue, you can use an AWS subscription to link the SNS topic to the SQS queue. This allows messages published to the SNS topic to be automatically delivered to the SQS queue.
+### AWS Subscription ### 
+To send messages from an SNS topic to an SQS queue, you can use an AWS subscription to link the SNS topic to the SQS queue. This allows messages published to the SNS topic to be automatically delivered to the SQS queue.
+
   
 Steps Involved :
   - Ensure SNS topic is created.
   - Ensure SQS queue is created.
   - Create a subscription that links the SNS topic to the SQS queue.
+
+### AWS CloudFormation ###  
+is a service that allows you to define and provision AWS infrastructure using declarative templates. These templates are typically written in JSON or YAML format and describe the resources you want to create, modify, or delete in your AWS environment. CloudFormation manages the provisioning of these resources in an automated and consistent manner.
 
 ---------------------------
 
